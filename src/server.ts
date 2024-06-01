@@ -2,12 +2,26 @@ import { Server } from "http";
 import { app } from "@app";
 import { logger } from "utils/logger";
 import { errorHandler, isTrustedError } from "utils/errorHandler";
+import mongoose from "mongoose";
 
 const port = 5000;
+const connectToDatabase = async (): Promise<void> => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    logger.info("Connected to MongoDB");
+  } catch (error) {
+    logger.error(error);
+    process.exit(1);
+  }
+};
 
-const server: Server = app.listen(port, (): void => {
-  console.log(`Listening on port ${port}`);
-  logger.info(`Application Forum-Website-Backend listens on PORT: ${port}`);
+const server: Server = app.listen(port, async (): Promise<void> => {
+  await connectToDatabase().then(
+    () => {
+      console.log(`Connected to MongoDB. Listening on port ${port}`);
+    },
+    (error) => logger.error(error)
+  );
 });
 
 const exitHandler = (): void => {
