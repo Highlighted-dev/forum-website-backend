@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import AppError from "utils/errorHandler";
 import { logger } from "utils/logger";
 import dotenv from "dotenv";
+import { errorHandlingMiddleware } from "./errorHandlingMiddleware";
 
 dotenv.config();
 
@@ -22,5 +23,14 @@ export const apiKeyMiddleware = (
   logger.error(
     "Missing x-api-key in request header or it does not match with env variable"
   );
-  throw new AppError(403, "Access forbidden");
+  errorHandlingMiddleware(
+    new AppError(
+      403,
+      "Missing x-api-key in request header or it does not match with env variable",
+      true
+    ),
+    req,
+    res,
+    next
+  );
 };
