@@ -53,3 +53,7 @@ process.on("SIGTERM", () => {
     server.close();
   }
 });
+
+app.use("/", (req, res) => {
+  res.send("Hello World!");
+});
