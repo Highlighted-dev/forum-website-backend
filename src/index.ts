@@ -3,8 +3,9 @@ import { app } from "@app";
 import { logger } from "utils/logger";
 import { errorHandler, isTrustedError } from "utils/errorHandler";
 import mongoose from "mongoose";
-
-const port = 5000;
+import dotenv from "dotenv";
+dotenv.config();
+const port = process.env.NODE_ENV == "production" ? 4200 : 5000;
 const connectToDatabase = async (): Promise<void> => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
@@ -52,8 +53,4 @@ process.on("SIGTERM", () => {
   if (server) {
     server.close();
   }
-});
-
-app.use("/", (req, res) => {
-  res.send("Hello World!");
 });

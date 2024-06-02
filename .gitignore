@@ -4,3 +4,4 @@ app.log
 .env
 .vercel
 dist
+deploy.sh

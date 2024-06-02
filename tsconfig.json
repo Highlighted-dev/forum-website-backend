@@ -20,7 +20,7 @@
     "resolveJsonModule": true,
     "importHelpers": true,
     "baseUrl": "src",
-    "outDir": "./api",
+    "outDir": "./dist",
     "paths": {
       "@app": ["./app.ts"],
       "@components/*": ["components/*"]
