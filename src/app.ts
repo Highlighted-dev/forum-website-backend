@@ -10,3 +10,4 @@ app.use(morganMiddleware);
 app.use(errorHandlingMiddleware);
 app.use(apiKeyMiddleware);
 app.use("/externalApi/chat/", ChatRoute);
+app.use("/", (req, res) => res.send("Hello World!"));
