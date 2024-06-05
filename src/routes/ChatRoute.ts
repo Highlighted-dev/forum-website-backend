@@ -24,10 +24,11 @@ router.post(
   jsonParser,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { username, content } = req.body;
+      const { username, content, icon } = req.body;
       const newMessage = new messageModel({
         username,
         content,
+        icon,
       });
       await newMessage.save();
       res.json(newMessage);
