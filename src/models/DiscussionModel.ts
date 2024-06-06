@@ -1,7 +1,13 @@
 import { Document, Schema, model } from "mongoose";
 
+export interface IUser {
+  name: string;
+  email: string;
+  image: string;
+}
+
 export interface IDiscussionModel extends Document {
-  username: string;
+  user: IUser;
   title: string;
   content: string;
   createdAt: Date;
@@ -13,8 +19,12 @@ export interface IDiscussionModel extends Document {
 
 const discussionsSchema: Schema = new Schema(
   {
+    user: {
+      name: { type: String, required: true },
+      email: { type: String, required: true },
+      image: { type: String, required: false },
+    },
     title: { type: String, required: true },
-    username: { type: String, required: true },
     content: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     editedAt: { type: Date, default: Date.now },
@@ -23,7 +33,11 @@ const discussionsSchema: Schema = new Schema(
     answers: [
       {
         type: {
-          username: { type: String, required: true },
+          user: {
+            name: { type: String, required: true },
+            email: { type: String, required: true },
+            image: { type: String, required: false },
+          },
           content: { type: String, required: true },
           create_date: { type: Date, default: Date.now },
           edit_date: { type: Date, default: Date.now },

@@ -35,19 +35,18 @@ router.post(
   jsonParser,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(req.body);
-      const { username, title, content, category, _id } = req.body;
-      if (username && _id && content) {
+      const { user, title, content, category, _id } = req.body;
+      if (user && _id && content) {
         await discussionModel.findByIdAndUpdate(_id, {
-          $push: { answers: { username, content } },
+          $push: { answers: { user, content } },
         });
-        return res.json({ username, content });
+        return res.json({ user, content });
       }
-      if (!username || !title || !content || !category) {
+      if (!user || !title || !content || !category) {
         return res.status(400).json({ error: "All fields are required" });
       }
       const newDiscussion = new discussionModel({
-        username,
+        user,
         title,
         content,
         category,

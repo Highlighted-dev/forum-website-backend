@@ -1,18 +1,20 @@
 import { Document, Schema, model } from "mongoose";
+import { IUser } from "./DiscussionModel";
 
 export interface IMessageModel extends Document {
-  username: string;
+  user: IUser;
   content: string;
   timestamp: Date;
-  icon?: string;
 }
-
 const messageSchema: Schema = new Schema(
   {
-    username: { type: String, required: true },
+    user: {
+      name: { type: String, required: true },
+      email: { type: String, required: true },
+      image: { type: String, required: false },
+    },
     content: { type: String, required: true },
     timestamp: { type: Date, default: Date.now },
-    icon: { type: String, required: false },
   },
   { versionKey: false }
 );
