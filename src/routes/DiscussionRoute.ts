@@ -30,6 +30,22 @@ router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
+router.get(
+  "/category/:category",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { category } = req.params;
+      const discussions = await discussionModel.find({
+        category: { $regex: new RegExp(category, "i") },
+      });
+      res.json(discussions);
+    } catch (error) {
+      logger.error(error);
+      res.status(500).json({ error: "Failed to retrieve discussions" });
+    }
+  }
+);
+
 router.post(
   "/",
   jsonParser,
