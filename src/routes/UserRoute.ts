@@ -35,7 +35,6 @@ router.put(
   jsonParser,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(req.body);
       const { id } = req.params;
       const { name, bio } = req.body;
       // either name of bio may be undefined
