@@ -22,6 +22,7 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    if (!id) return res.status(400).json({ error: "Id is required" });
     const discussion = await discussionModel.findById(id);
     res.json(discussion);
   } catch (error) {
@@ -83,6 +84,9 @@ router.put(
     try {
       const { id } = req.params;
       const { username, title, content } = req.body;
+      if (!username || !title || !content) {
+        return res.status(400).json({ error: "All fields are required" });
+      }
       const edit_date = new Date();
       const updatedDiscussion = await discussionModel.findByIdAndUpdate(
         id,

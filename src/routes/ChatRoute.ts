@@ -25,6 +25,12 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { user, content, icon } = req.body;
+      if (!user || !content || !icon) {
+        logger.error("User, content and icon are required");
+        return res
+          .status(400)
+          .json({ error: "User, content and icon are required" });
+      }
       const newMessage = new messageModel({
         user,
         content,
