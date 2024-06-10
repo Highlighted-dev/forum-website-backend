@@ -35,14 +35,13 @@ router.put(
   jsonParser,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
+      console.log(req.body);
       const { id } = req.params;
-      const { name, email, image } = req.body;
-      await userModel.findByIdAndUpdate(id, {
-        name,
-        email,
-        image,
-      });
-      res.json({ name, email, image });
+      const { name, bio } = req.body;
+      // either name of bio may be undefined
+      await userModel.findByIdAndUpdate(id, { name, bio }, { new: true });
+
+      res.json({ name, bio });
     } catch (error) {
       logger.error(error);
       res.status(500).json({ error: "Failed to update user" });

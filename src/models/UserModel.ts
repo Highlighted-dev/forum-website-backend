@@ -6,6 +6,7 @@ export interface IUserModel extends Document {
   image: string;
   role?: string;
   emailVerified?: boolean;
+  bio?: string;
 }
 
 const userSchema: Schema = new Schema(
@@ -15,6 +16,7 @@ const userSchema: Schema = new Schema(
     image: { type: String, required: false },
     role: { type: String, required: false },
     emailVerified: { type: Boolean, required: false },
+    bio: { type: String, required: false },
   },
   { versionKey: false }
 );
