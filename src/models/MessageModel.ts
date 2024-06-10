@@ -1,8 +1,8 @@
 import { Document, Schema, model } from "mongoose";
-import { IUser } from "./DiscussionModel";
+import { IUserModel } from "./UserModel";
 
 export interface IMessageModel extends Document {
-  user: IUser;
+  user: IUserModel;
   content: string;
   timestamp: Date;
 }

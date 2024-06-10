@@ -1,13 +1,8 @@
 import { Document, Schema, model } from "mongoose";
-
-export interface IUser {
-  name: string;
-  email: string;
-  image: string;
-}
+import { IUserModel } from "./UserModel";
 
 export interface IDiscussionModel extends Document {
-  user: IUser;
+  user: IUserModel;
   title: string;
   content: string;
   createdAt: Date;
