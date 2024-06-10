@@ -15,9 +15,12 @@ export interface IDiscussionModel extends Document {
 const discussionsSchema: Schema = new Schema(
   {
     user: {
+      _id: { type: String, required: true },
       name: { type: String, required: true },
       email: { type: String, required: true },
       image: { type: String, required: false },
+      role: { type: String, required: false },
+      bio: { type: String, required: false },
     },
     title: { type: String, required: true },
     content: { type: String, required: true },
@@ -29,9 +32,12 @@ const discussionsSchema: Schema = new Schema(
       {
         type: {
           user: {
+            _id: { type: String, required: true },
             name: { type: String, required: true },
             email: { type: String, required: true },
             image: { type: String, required: false },
+            role: { type: String, required: false },
+            bio: { type: String, required: false },
           },
           content: { type: String, required: true },
           create_date: { type: Date, default: Date.now },
