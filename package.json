@@ -2,16 +2,20 @@
   "scripts": {
     "build": "tsc && tsc-alias",
     "server:prod": "NODE_ENV=production node dist/index.js",
-    "server:dev": "ts-node-dev --inspect=0.0.0.0:9229 --exit-child --respawn -r tsconfig-paths/register src/index.ts"
+    "server:dev": "ts-node-dev --inspect=0.0.0.0:9229 --exit-child --respawn -r tsconfig-paths/register src/index.ts",
+    "test": "jest"
   },
   "dependencies": {
     "@types/express": "^4.17.21",
     "body-parser": "^1.20.2",
+    "chai": "^5.1.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongoose": "^8.4.1",
     "morgan": "^1.10.0",
     "node-cron": "^3.0.3",
+    "sinon": "^18.0.0",
+    "supertest": "^7.0.0",
     "tsc-alias": "^1.8.10",
     "tsconfig-paths": "^4.2.0",
     "tslib": "^2.6.2",
@@ -19,11 +23,16 @@
     "winston": "^3.13.0"
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.12",
+    "@types/mocha": "^10.0.6",
     "eslint": "^8.5.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^18.0.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-security": "^3.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.4",
     "ts-node-dev": "^2.0.0"
   }
 }

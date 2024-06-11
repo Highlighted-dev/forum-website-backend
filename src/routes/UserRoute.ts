@@ -1,11 +1,11 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
-import { logger } from "utils/logger";
-import userModel from "models/UserModel";
-import discussionModel from "models/DiscussionModel";
-import messageModel from "models/MessageModel";
-import { isUsernameValid } from "utils/validators";
+import { logger } from "../utils/logger";
+import userModel from "../models/UserModel";
+import discussionModel from "../models/DiscussionModel";
+import messageModel from "../models/MessageModel";
+import { isUsernameValid } from "../utils/validators";
 dotenv.config();
 
 const router: Router = express.Router();
@@ -25,7 +25,10 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    if (!id) return res.status(400).json({ error: "Id is required" });
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      logger.error("Invalid id");
+      return res.status(400).json({ error: "Invalid id" });
+    }
     const user = await userModel.findById(id);
     res.json(user);
   } catch (error) {
@@ -49,7 +52,7 @@ router.put(
         logger.error("Invalid username");
         return res.status(400).json({
           error:
-            "Invalid username. Must be between 3 and 30 characters long and can contain only letters, numbers, and these special characters: !@#()_.",
+            "Invalid username. Must be between 4 and 25 characters long and can contain only letters, numbers, and these special characters: !@#()_.",
         });
       }
       if (name) {

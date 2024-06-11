@@ -5,3 +5,4 @@ app.log
 .vercel
 dist
 deploy.sh
+coverage
