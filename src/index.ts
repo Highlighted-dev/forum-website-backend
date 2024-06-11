@@ -8,7 +8,7 @@ dotenv.config();
 const port = 5000;
 const connectToDatabase = async (): Promise<void> => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(process.env.MONGODB_URI || "");
     logger.info("Connected to MongoDB");
   } catch (error) {
     logger.error(error);
@@ -26,14 +26,10 @@ const server: Server = app.listen(port, async (): Promise<void> => {
 });
 
 const exitHandler = (): void => {
-  if (app) {
-    server.close(() => {
-      logger.info("Server closed");
-      process.exit(1);
-    });
-  } else {
+  server.close(() => {
+    logger.info("Server closed");
     process.exit(1);
-  }
+  });
 };
 
 const unexpectedErrorHandler = (error: Error): void => {

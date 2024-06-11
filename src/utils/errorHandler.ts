@@ -11,6 +11,7 @@ export const isTrustedError = (error: Error): boolean => {
 };
 
 export default class AppError extends Error {
+  //@ts-ignore
   public readonly name: string;
 
   public readonly httpCode: number;

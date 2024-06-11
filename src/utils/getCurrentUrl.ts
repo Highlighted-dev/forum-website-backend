@@ -4,5 +4,5 @@ export const getCurrentUrl = (): string => {
   if (process.env.NODE_ENV === "development") {
     return "http://localhost:5000";
   }
-  return process.env.API_URL_PROD;
+  return process.env.API_URL_PROD || "";
 };

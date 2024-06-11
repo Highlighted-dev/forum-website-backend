@@ -24,7 +24,7 @@ const stopServerFromSleep = async () => {
   logger.info("Stopping server from sleeping...");
   await fetch(getCurrentUrl() + "/", {
     method: "GET",
-    headers: { "x-api-key": process.env.API_KEY_TOKEN },
+    headers: { "x-api-key": process.env.API_KEY_TOKEN! },
   });
 };
 cron.schedule("*/14 * * * *", stopServerFromSleep);

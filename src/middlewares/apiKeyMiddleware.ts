@@ -13,11 +13,11 @@ export const apiKeyMiddleware = (
   next: NextFunction
 ) => {
   let xApiKey: string;
-  const token: string = process.env.API_KEY_TOKEN;
+  const token: string = process.env.API_KEY_TOKEN!;
   if (req.header("x-api-key")) {
-    xApiKey = req.header("x-api-key").trim();
+    xApiKey = req.header("x-api-key")!.trim();
   }
-  if (!!token && xApiKey === token.trim()) {
+  if (!!token && xApiKey! === token.trim()) {
     return next();
   }
   logger.error(
