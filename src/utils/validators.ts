@@ -12,3 +12,10 @@ export const isMessageValid = (message: string): boolean => {
     /^[a-zA-Z0-9\s!@#()_.,?\uD83C-\uDBFF\uDC00-\uDFFF]{1,500}$/;
   return messageRegex.test(message);
 };
+
+export const isDiscussionTitleValid = (title: string): boolean => {
+  // Title must be at least 4 characters long and maximum 75 characters long.
+  // Title must contain only alphanumeric characters, spaces, special characters and emojis (ex. ♿🔥).
+  const titleRegex = /^[a-zA-Z0-9\s!@#()_.,?\uD83C-\uDBFF\uDC00-\uDFFF]{4,75}$/;
+  return titleRegex.test(title);
+};
