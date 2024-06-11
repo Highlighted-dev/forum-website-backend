@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import messageModel from "models/MessageModel";
 import { logger } from "utils/logger";
+import { isMessageValid } from "utils/validators";
 dotenv.config();
 
 const router: Router = express.Router();
@@ -24,17 +25,25 @@ router.post(
   jsonParser,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { user, content, icon } = req.body;
-      if (!user || !content || !icon) {
+      const { user, content } = req.body;
+      if (!user || !content) {
         logger.error("User, content and icon are required");
-        return res
-          .status(400)
-          .json({ error: "User, content and icon are required" });
+        return res.status(400).json({
+          error:
+            "User, content and icon are required (your message is probably empty)",
+        });
       }
+      if (!isMessageValid(content)) {
+        logger.error("Invalid message");
+        return res.status(400).json({
+          error:
+            "Invalid message. Message must be at least 1 character long and maximum 500 characters long. Message must contain only alphanumeric characters, spaces, special characters and emojis.",
+        });
+      }
+      user._id = user.id;
       const newMessage = new messageModel({
         user,
         content,
-        icon,
       });
       await newMessage.save();
       res.json(newMessage);
