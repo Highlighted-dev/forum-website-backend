@@ -9,6 +9,7 @@ export interface IDiscussionModel extends Document {
   editedAt: Date;
   pinned: boolean;
   category: string;
+  closed: boolean;
   answers: IDiscussionModel[];
 }
 
@@ -28,6 +29,7 @@ const discussionsSchema: Schema = new Schema(
     editedAt: { type: Date, default: Date.now },
     pinned: { type: Boolean, default: false },
     category: { type: String, required: true },
+    closed: { type: Boolean, default: false },
     answers: [
       {
         type: {

@@ -54,6 +54,7 @@ router.post(
     try {
       const { user, title, content, category, _id } = req.body;
       if (user && _id && content) {
+        user._id = user.id;
         await discussionModel.findByIdAndUpdate(_id, {
           $push: { answers: { user, content } },
         });
@@ -62,6 +63,7 @@ router.post(
       if (!user || !title || !content || !category) {
         return res.status(400).json({ error: "All fields are required" });
       }
+      user._id = user.id;
       const newDiscussion = new discussionModel({
         user,
         title,
