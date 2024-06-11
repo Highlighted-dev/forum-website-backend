@@ -30,7 +30,13 @@ router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
       return res.status(400).json({ error: "Invalid id" });
     }
     const user = await userModel.findById(id);
-    res.json(user);
+    const numberOfDiscussions = await discussionModel.countDocuments({
+      "user._id": id,
+    });
+    const numberOfReplies = await discussionModel.countDocuments({
+      "answers.user._id": id,
+    });
+    res.json({ ...user?.toObject(), numberOfDiscussions, numberOfReplies });
   } catch (error) {
     logger.error(error);
     res.status(500).json({ error: "Failed to retrieve user" });
