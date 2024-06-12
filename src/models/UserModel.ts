@@ -14,7 +14,7 @@ const userSchema: Schema = new Schema(
     name: { type: String, required: true },
     email: { type: String, required: true },
     image: { type: String, required: false },
-    role: { type: String, required: false },
+    role: { type: String, required: false, default: "user" },
     emailVerified: { type: Boolean, required: false },
     bio: { type: String, required: false },
   },
