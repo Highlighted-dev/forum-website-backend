@@ -1,6 +1,10 @@
 import { Document, Schema, model } from "mongoose";
 import { IUserModel } from "./UserModel";
 
+export interface IReactionsModel {
+  user: IUserModel;
+  reaction: string;
+}
 export interface IDiscussionModel extends Document {
   user: IUserModel;
   title: string;
@@ -10,6 +14,7 @@ export interface IDiscussionModel extends Document {
   pinned: boolean;
   category: string;
   closed: boolean;
+  reactions: IReactionsModel[];
   answers: IDiscussionModel[];
 }
 
@@ -30,6 +35,19 @@ const discussionsSchema: Schema = new Schema(
     pinned: { type: Boolean, default: false },
     category: { type: String, required: true },
     closed: { type: Boolean, default: false },
+    reactions: [
+      {
+        user: {
+          _id: { type: String, required: true },
+          name: { type: String, required: true },
+          email: { type: String, required: true },
+          image: { type: String, required: false },
+          role: { type: String, required: false },
+          bio: { type: String, required: false },
+        },
+        reaction: { type: String, required: true },
+      },
+    ],
     answers: [
       {
         type: {
@@ -42,6 +60,19 @@ const discussionsSchema: Schema = new Schema(
             bio: { type: String, required: false },
           },
           content: { type: String, required: true },
+          reactions: [
+            {
+              user: {
+                _id: { type: String, required: true },
+                name: { type: String, required: true },
+                email: { type: String, required: true },
+                image: { type: String, required: false },
+                role: { type: String, required: false },
+                bio: { type: String, required: false },
+              },
+              reaction: { type: String, required: true },
+            },
+          ],
           create_date: { type: Date, default: Date.now },
           edit_date: { type: Date, default: Date.now },
         },

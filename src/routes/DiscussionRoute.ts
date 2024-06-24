@@ -106,4 +106,66 @@ router.put(
     }
   }
 );
+
+// New endpoint to add or update reactions
+router.put(
+  "/:id/reactions",
+  jsonParser,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const { user, reaction, answerId } = req.body;
+
+      if (!user || !reaction) {
+        return res
+          .status(400)
+          .json({ error: "User and reaction are required" });
+      }
+      user._id = user.id;
+      const discussion = await discussionModel.findById(id);
+      if (!discussion) {
+        return res.status(404).json({ error: "Discussion not found" });
+      }
+
+      if (answerId) {
+        const answer = discussion.answers.find(
+          (ans) => (ans._id as string).toString() === answerId
+        );
+        if (!answer) {
+          return res.status(404).json({ error: "Answer not found" });
+        }
+
+        const existingReaction = answer.reactions?.find(
+          (r) => r.user._id === user._id
+        );
+
+        if (existingReaction) {
+          existingReaction.reaction = reaction;
+        } else {
+          if (!answer.reactions) {
+            answer.reactions = [];
+          }
+          answer.reactions.push({ user, reaction });
+        }
+      } else {
+        const existingReaction = discussion.reactions.find(
+          (r) => r.user._id === user._id
+        );
+
+        if (existingReaction) {
+          existingReaction.reaction = reaction;
+        } else {
+          discussion.reactions.push({ user, reaction });
+        }
+      }
+
+      await discussion.save();
+      res.json(discussion);
+    } catch (error) {
+      logger.error(error);
+      res.status(500).json({ error: "Failed to update reactions" });
+    }
+  }
+);
+
 export default router;
