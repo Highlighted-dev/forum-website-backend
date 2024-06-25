@@ -3,7 +3,10 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import { logger } from "utils/logger";
 import discussionModel from "models/DiscussionModel";
-import { isDiscussionTitleValid } from "utils/validators";
+import {
+  isDiscussionContentValid,
+  isDiscussionTitleValid,
+} from "utils/validators";
 dotenv.config();
 
 const router: Router = express.Router();
@@ -64,8 +67,11 @@ router.post(
       if (!user || !title || !content || !category) {
         return res.status(400).json({ error: "All fields are required" });
       }
+      console.log(content);
       if (!isDiscussionTitleValid(title)) {
         return res.status(400).json({ error: "Title is invalid" });
+      } else if (!isDiscussionContentValid(content)) {
+        return res.status(400).json({ error: "Content is invalid" });
       }
       user._id = user.id;
       const newDiscussion = new discussionModel({
