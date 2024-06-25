@@ -50,7 +50,8 @@ router.put(
     try {
       const { id } = req.params;
       const { name, bio } = req.body;
-      if (!name || !bio) {
+      console.log(req.body);
+      if (!name && !bio) {
         logger.error("Name or bio are required");
         return res.status(400).json({ error: "Name or bio are required" });
       }
