@@ -95,7 +95,15 @@ router.put(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
-      const { username, title, content } = req.body;
+      const { username, title, content, closing } = req.body;
+      if (closing == "true" || closing == "false") {
+        const updatedDiscussion = await discussionModel.findByIdAndUpdate(
+          id,
+          { closed: closing },
+          { new: true }
+        );
+        return res.json(updatedDiscussion);
+      }
       if (!username || !title || !content) {
         return res.status(400).json({ error: "All fields are required" });
       }
