@@ -9,7 +9,7 @@ export const isMessageValid = (message: string): boolean => {
   // Message must be at least 1 character long and maximum 500 characters long.
   // Message must contain only alphanumeric characters, spaces, special characters and emojis (ex. ♿🔥).
   const messageRegex =
-    /^[a-zA-Z0-9\s!@#()_.,?/\uD83C-\uDBFF\uDC00-\uDFFFĄąĆćĘęŁłŃńÓóŚśŹźŻż]{1,500}$/;
+    /^[a-zA-Z0-9\s!@#()_.,;'"?/\]\[\uD83C-\uDBFF\uDC00-\uDFFFĄąĆćĘęŁłŃńÓóŚśŹźŻż]{1,500}$/;
   return messageRegex.test(message);
 };
 
@@ -17,7 +17,7 @@ export const isDiscussionTitleValid = (title: string): boolean => {
   // Title must be at least 4 characters long and maximum 75 characters long.
   // Title must contain only alphanumeric characters, spaces, special characters and emojis (ex. ♿🔥).
   const titleRegex =
-    /^[a-zA-Z0-9\s!@#()_.,?/\uD83C-\uDBFF\uDC00-\uDFFFĄąĆćĘęŁłŃńÓóŚśŹźŻż]{4,75}$/;
+    /^[a-zA-Z0-9\s!@#()_.,;'"?/\]\[\uD83C-\uDBFF\uDC00-\uDFFFĄąĆćĘęŁłŃńÓóŚśŹźŻż]{4,75}$/;
   return titleRegex.test(title);
 };
 
@@ -25,6 +25,6 @@ export const isDiscussionContentValid = (content: string): boolean => {
   // Content must be at least 1 character long and maximum 5000 characters long.
   // Content must contain only alphanumeric characters, spaces, special characters and emojis (ex. ♿🔥).
   const contentRegex =
-    /^[a-zA-Z0-9\s!@#()_.<>/,?\uD83C-\uDBFF\uDC00-\uDFFFĄąĆćĘęŁłŃńÓóŚśŹźŻż]{1,5000}$/;
+    /^[a-zA-Z0-9\s!@#()_.,;'"?/\]\[\uD83C-\uDBFF\uDC00-\uDFFFĄąĆćĘęŁłŃńÓóŚśŹźŻż]{1,5000}$/;
   return contentRegex.test(content);
 };
