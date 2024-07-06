@@ -67,7 +67,6 @@ router.post(
       if (!user || !title || !content || !category) {
         return res.status(400).json({ error: "All fields are required" });
       }
-      console.log(content);
       if (!isDiscussionTitleValid(title)) {
         return res.status(400).json({ error: "Title is invalid" });
       } else if (!isDiscussionContentValid(content)) {
@@ -145,6 +144,7 @@ router.put(
         const answer = discussion.answers.find(
           (ans) => (ans._id as string).toString() === answerId
         );
+
         if (!answer) {
           return res.status(404).json({ error: "Answer not found" });
         }
