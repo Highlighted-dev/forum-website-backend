@@ -27,4 +27,4 @@ const stopServerFromSleep = async () => {
     headers: { "x-api-key": process.env.API_KEY_TOKEN! },
   });
 };
-cron.schedule("*/14 * * * *", stopServerFromSleep);
+cron.schedule("*/5 * * * *", stopServerFromSleep);
